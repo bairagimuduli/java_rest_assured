@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="hello world" verbose="1">
+    <parameter name="type" value="Regression" />
+    <listeners>
+    </listeners>
+    <test name="hello world"  preserve-order="true" parallel="false">
+        <classes>
+            <class name="com.main.apiAutomation.HelloWorld" />
+        </classes>
+    </test>
+</suite>
