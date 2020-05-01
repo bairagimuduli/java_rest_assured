@@ -4,16 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.main.apiAutomation.BaseHelper;
 import com.main.apiAutomation.pojo.BhagwatGitaPojo;
-import com.main.apiAutomation.pojo.GetRequest;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import static io.restassured.RestAssured.given;
 
 public class BhagavadGitaHelper {
 
@@ -71,6 +65,18 @@ public class BhagavadGitaHelper {
         paramMap.put("language",language.name());
 
         Response response = baseHelper.get(baseURI, path + chapter + "/verses/" + verse, paramMap);
+        response.prettyPrint();
+        return response;
+    }
+
+    public Response getVerseFromChapterViaPathAsQuery(Language language, int chapter, int verse) throws JsonProcessingException {
+
+        String token = loginGita();
+        String path="api/v1/chapters/";
+
+        String newPath= path + chapter + "/verses/" + verse +"?access_token="+token+"&language="+language.name();
+
+        Response response = baseHelper.get(baseURI, newPath);
         response.prettyPrint();
         return response;
     }

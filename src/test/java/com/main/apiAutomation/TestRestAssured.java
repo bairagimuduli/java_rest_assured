@@ -6,9 +6,11 @@ import com.main.apiAutomation.service_helpers.BhagavadGitaHelper;
 import com.main.apiAutomation.service_helpers.PostmanEchoHelper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.path.json.config.JsonPathConfig;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,9 +25,12 @@ public class TestRestAssured {
 
     @Test
     public void testGita() throws JsonProcessingException {
-        //https://bhagavadgita.io/api/v1/chapters/1/verses/2?access_token={{token}}&language=hi
+//        https://bhagavadgita.io/api/v1/chapters/1/verses/2?access_token={{token}}&language=hi
 
         Response verseFromChapter = bhagavadGitaHelper.getVerseFromChapter(BhagavadGitaHelper.Language.hi, 1, 2);
+        JsonPathConfig jsonPathConfig= new JsonPathConfig();
+        String chapter_number = verseFromChapter.jsonPath(jsonPathConfig).get("chapter_number").toString();
+        Assert.assertEquals(chapter_number,"1","we are doing it wrong");
 
     }
 
@@ -66,6 +71,7 @@ public class TestRestAssured {
         parametersMap.put("client_secret","s3ZjaLFQCnJqDAoBL14PCe0Q1mbIi3UdlbJzbrzwNONbUoLdEO");
         parametersMap.put("grant_type","client_credentials");
         parametersMap.put("scope","verse chapter");
+        parametersMap.put("name","Meera");
 
         RestAssured.baseURI=baseURI;
 
@@ -75,5 +81,20 @@ public class TestRestAssured {
 //        Response response = baseHelper.post(baseURI, path, header);
         response.prettyPrint();
         response.then().statusCode(200);
+    }
+
+    @Test
+    public void testAssertion() {
+        String a="bantu";
+        int b= 100;
+        int c=101;
+        double d=12.2;
+        float f=12.33f;
+        boolean boolValue = false;
+        SoftAssert softAssert= new SoftAssert();
+        softAssert.assertEquals(a,"bantuiu","the input is wrong");
+        softAssert.assertEquals(b,101);
+        System.out.println("thi si a test");
+        softAssert.assertAll();
     }
 }
