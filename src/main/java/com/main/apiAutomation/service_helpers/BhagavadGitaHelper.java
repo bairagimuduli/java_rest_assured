@@ -38,7 +38,6 @@ public class BhagavadGitaHelper {
 //    }
 
     public String loginGita() throws JsonProcessingException {
-
         String path="auth/oauth/token";
 
         Map<String, String> parametersMap = new HashMap<>();
@@ -54,13 +53,34 @@ public class BhagavadGitaHelper {
         return accessToken;
     }
 
-    public Response getVerseFromChapter(Language language, int chapter, int verse) throws JsonProcessingException {
+    public String loginGita(String clientId, String clientSecret, String grandType, String scope) throws JsonProcessingException {
+        String path="auth/oauth/token";
 
-        String token = loginGita();
+        Map<String, String> parametersMap = new HashMap<>();
+        parametersMap.put("client_id",clientId);
+        parametersMap.put("client_secret",clientSecret);
+        parametersMap.put("grant_type",grandType);
+        parametersMap.put("scope",scope);
+
+        Response response = baseHelper.post(baseURI, path, parametersMap);
+        ObjectMapper objectMapper=new ObjectMapper();
+        BhagwatGitaPojo bhagwatGitaPojo = objectMapper.readValue(response.prettyPrint(), BhagwatGitaPojo.class);
+        String accessToken = bhagwatGitaPojo.getAccessToken();
+        System.out.println("access token= "+accessToken);
+        return accessToken;
+    }
+
+
+
+
+
+    public Response getVerseFromChapter(Language language, int chapter, int verse, String token) throws JsonProcessingException {
+
+//        String token = loginGita();  //loca; varibale
         String path="api/v1/chapters/";
 
         //https://bhagavadgita.io/api/v1/chapters/1/verses/2?access_token={{token}}&language=hi
-        Map<String, String> paramMap= new HashMap<>();
+        Map<String, String> paramMap= new HashMap<String, String>();
         paramMap.put("access_token",token);
         paramMap.put("language",language.name());
 
