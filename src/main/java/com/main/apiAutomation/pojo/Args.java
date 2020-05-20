@@ -1,4 +1,3 @@
-
 package com.main.apiAutomation.pojo;
 
 public class Args {

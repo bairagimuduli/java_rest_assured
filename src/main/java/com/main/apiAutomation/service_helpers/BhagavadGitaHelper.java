@@ -63,16 +63,13 @@ public class BhagavadGitaHelper {
         parametersMap.put("scope",scope);
 
         Response response = baseHelper.post(baseURI, path, parametersMap);
-        ObjectMapper objectMapper=new ObjectMapper();
+        ObjectMapper objectMapper;
+        objectMapper = new ObjectMapper();
         BhagwatGitaPojo bhagwatGitaPojo = objectMapper.readValue(response.prettyPrint(), BhagwatGitaPojo.class);
         String accessToken = bhagwatGitaPojo.getAccessToken();
         System.out.println("access token= "+accessToken);
         return accessToken;
     }
-
-
-
-
 
     public Response getVerseFromChapter(Language language, int chapter, int verse, String token) throws JsonProcessingException {
 

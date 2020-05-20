@@ -15,15 +15,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExcelUtil {
-    private static  FileInputStream inputStream;
+    private static FileInputStream inputStream;
     private static Workbook workbook;
     private static Sheet sheet;
-    static  Logger logger = LogManager.getLogger(ExcelUtil.class);
+    static Logger logger = LogManager.getLogger(ExcelUtil.class);
 
+    /**
+     * getSheet
+     * get sheet from the excel file
+     *
+     * @param excelFIle
+     * @param sheetName
+     * @return
+     */
     public static Sheet getSheet(String excelFIle, String sheetName) {
         try {
             File file = new File(excelFIle);
-            if (!file.exists()){
+            if (!file.exists()) {
                 logger.info("File does not exist, so existing function");
             }
             logger.info("going inside {}", file.getAbsolutePath());
@@ -41,43 +49,73 @@ public class ExcelUtil {
             sheet = workbook.getSheet(sheetName);
         } catch (IOException e) {
             e.printStackTrace();
-        }return sheet;
+        }
+        return sheet;
     }
 
-    public static String getCellValue(Sheet sheet,int rowId, int columnId){
-        String cellValue= null;
+    /**
+     * getCellValue
+     *
+     * @param sheet
+     * @param rowId
+     * @param columnId
+     * @return
+     */
+    public static String getCellValue(Sheet sheet, int rowId, int columnId) {
+        String cellValue = null;
         Cell cell = sheet.getRow(rowId).getCell(columnId);
         if (null != cell.toString()) {
             switch (cell.getCellType()) {
                 case NUMERIC:
-                    cellValue= String.valueOf(cell.getNumericCellValue());
+                    cellValue = String.valueOf(cell.getNumericCellValue());
                     break;
                 case STRING:
-                    cellValue= cell.getStringCellValue();
+                    cellValue = cell.getStringCellValue();
                     break;
             }
         }
         return cellValue;
     }
 
-    public static List allValueOfColumn(Sheet sheet, int columnId){
-        List allValueOfColumn= new ArrayList();
+    /**
+     * allValueOfColumn
+     *
+     * @param sheet
+     * @param columnId
+     * @return
+     */
+    public static List allValueOfColumn(Sheet sheet, int columnId) {
+        List allValueOfColumn = new ArrayList();
         for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
             allValueOfColumn.add(getCellValue(sheet, i, columnId));
         }
         return allValueOfColumn;
     }
 
-    public static int getColumnIdFromName(Sheet sheet, String columnName){
+    /**
+     * getColumnIdFromName
+     *
+     * @param sheet
+     * @param columnName
+     * @return
+     */
+    public static int getColumnIdFromName(Sheet sheet, String columnName) {
         int columnId = 0;
         for (int i = 0; i < sheet.getRow(0).getPhysicalNumberOfCells(); i++) {
-            if (columnName.equalsIgnoreCase(sheet.getRow(0).getCell(i).toString())){
-                columnId=i;
-            };
+            if (columnName.equalsIgnoreCase(sheet.getRow(0).getCell(i).toString())) {
+                columnId = i;
+            }
+            ;
         }
         return columnId;
     }
-    public static List getRowData(Sheet sheet, int rowNo){
+
+    /**
+     * @param sheet
+     * @param rowNo
+     * @return
+     */
+    public static List getRowData(Sheet sheet, int rowNo) {
         List rowData = new ArrayList();
         for (int i = 0; i < sheet.getRow(rowNo).getPhysicalNumberOfCells(); i++) {
             rowData.add(sheet.getRow(rowNo).getCell(i).getStringCellValue());
