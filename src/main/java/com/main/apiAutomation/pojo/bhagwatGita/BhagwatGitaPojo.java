@@ -1,4 +1,4 @@
-package com.main.apiAutomation.pojo;
+package com.main.apiAutomation.pojo.bhagwatGita;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

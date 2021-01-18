@@ -1,7 +1,7 @@
 package com.main.apiAutomation.data_provider;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.main.apiAutomation.ExcelUtil;
+import com.main.apiAutomation.util.ExcelUtil;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.testng.annotations.DataProvider;
 

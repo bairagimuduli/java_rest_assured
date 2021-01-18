@@ -1,4 +1,4 @@
-package com.main.apiAutomation;
+package com.main.apiAutomation.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

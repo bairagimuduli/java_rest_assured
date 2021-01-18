@@ -29,7 +29,8 @@ public class BaseHelper {
         RestAssured.baseURI = baseURI;
         logger.info("==============================================================");
         logger.info(baseURI + "/" + pathParam);
-        Response response = RestAssured.get(pathParam);
+        Response response = RestAssured.get("/"+pathParam);
+        logger.info("========= response code is ======  "+response.statusLine()+" ===========");
         logger.info("==============================================================");
         return response;
     }
@@ -46,6 +47,7 @@ public class BaseHelper {
         logger.info("==============================================================");
         logger.info(baseURI + "/" + pathParam);
         Response response = RestAssured.given().queryParams(queryParamsMap).get(pathParam);
+        logger.info("========= response code is ======  "+response.statusLine()+" ===========");
         logger.info("==============================================================");
         return response;
     }
@@ -63,12 +65,29 @@ public class BaseHelper {
         RestAssured.baseURI = baseURI;
         logger.info("==============================================================");
         logger.info(baseURI + "/" + pathParam);
+        logger.info(body);
 //        File file = new File(System.getProperty("user.dir") + File.separator + "Data/" + pathParam);
 //        printFile(file);
         Response response = RestAssured.given()
                 .contentType(contentType)
                 .body(body)
+                .when().post(pathParam);
+        logger.info("========= response code is ======  "+response.statusLine()+" ===========");
+        logger.info("==============================================================");
+        return response;
+    }
+
+    public Response post(String baseURI, String pathParam, String body) throws IOException {
+        RestAssured.baseURI = baseURI;
+        logger.info("==============================================================");
+        logger.info(baseURI + "/" + pathParam);
+        logger.info(body);
+//        File file = new File(System.getProperty("user.dir") + File.separator + "Data/" + pathParam);
+//        printFile(file);
+        Response response = RestAssured.given()
+                .body(body)
                 .when().post();
+        logger.info("========= response code is ======  "+response.statusLine()+" ===========");
         response.prettyPrint();
 
         logger.info("==============================================================");
@@ -88,9 +107,45 @@ public class BaseHelper {
         logger.info("==============================================================");
         logger.info(baseURI + "/" + pathParam);
         Response response = given().contentType(ContentType.URLENC).urlEncodingEnabled(true).formParams(parametersMap).post(pathParam);
+        logger.info("========= response code is ======  "+response.statusLine()+" ===========");
         response.prettyPrint();
 
+        logger.info("==============================================================");
+        return response;
+    }
 
+    /**
+     * put
+     *
+     * @param baseURI
+     * @param pathParam
+     * @param contentType
+     * @param body
+     * @return
+     * @throws IOException
+     */
+    public Response put(String baseURI, String pathParam, ContentType contentType, String body) throws IOException {
+        RestAssured.baseURI = baseURI;
+        logger.info("==============================================================");
+        logger.info(baseURI + "/" + pathParam);
+        logger.info(body);
+//        File file = new File(System.getProperty("user.dir") + File.separator + "Data/" + pathParam);
+//        printFile(file);
+        Response response = RestAssured.given()
+                .contentType(contentType)
+                .body(body)
+                .when().put(pathParam);
+        logger.info("========= response code is ======  "+response.statusLine()+" ===========");
+        logger.info("==============================================================");
+        return response;
+    }
+
+    public Response delete(String baseURI, String pathParam) {
+        RestAssured.baseURI = baseURI;
+        logger.info("==============================================================");
+        logger.info(baseURI + "/" + pathParam);
+        Response response = RestAssured.delete("/"+pathParam);
+        logger.info("========= response code is ======  "+response.statusLine()+" ===========");
         logger.info("==============================================================");
         return response;
     }

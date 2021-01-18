@@ -1,4 +1,4 @@
-package com.main.apiAutomation.service_helpers;
+package com.main.apiAutomation.util;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
@@ -8,7 +8,7 @@ import org.junit.Test;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 
-public class WireMockHelper {
+public class WireMockUtil {
 
     @Test
     public void startMockServer() {
